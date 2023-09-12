@@ -36,6 +36,8 @@ function ladder_operators(type, Nsites, args...)
         Cdag, C, _ = local_bosons(args...)
         ncut = size(Cdag, 1)
         Z = I(ncut) # No Wigner string needed for bosonic operators
+    else
+        error("$type not implemented!")
     end
 
     # Embed into full Fock-space.

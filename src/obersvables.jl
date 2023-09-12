@@ -3,7 +3,7 @@
 =#
 
 # ———————————————————————————————————— Partial trace ——————————————————————————————————— #
-function projection_operators(d, idx = 1:d^2; type = :dimer1)
+function projection_operators(d, idx = 1:d^2; trace_out = :dimer1)
     # Containers for evaluation
     projectors = Matrix{Int8}[]
     vec = zeros(Int8, d) # local basis vector
@@ -13,9 +13,9 @@ function projection_operators(d, idx = 1:d^2; type = :dimer1)
         vec .= 0
         vec[i] = 1.0
 
-        if type == :dimer1
+        if trace_out == :dimer1
             push!(projectors, kron(vec, I(d)))
-        elseif type == :dimer2
+        elseif trace_out == :dimer2
             push!(projectors, kron(I(d), vec))
         end
     end
@@ -24,12 +24,12 @@ function projection_operators(d, idx = 1:d^2; type = :dimer1)
 end
 
 """
-    partial_trace(O; type = :dimer1)
+    partial_trace(O; trace_out = :dimer1)
 
 Evaluate partial trace of O, which is represented as matrix in half-filled basis. Atm only
 implemented for the dimer system.
 """
-function partial_trace(O; type = :dimer1)
+function partial_trace(O; trace_out = :dimer1)
     # Find local dimension
     dim = size(O, 1)
     if dim == 6 || dim == 16 # :fermi
@@ -43,7 +43,7 @@ function partial_trace(O; type = :dimer1)
     end
 
     O_traced = zeros(d, d)
-    pjs = projection_operators(d, idx; type)
+    pjs = projection_operators(d, idx; trace_out)
 
     for i in range(1, d)
         O_traced += pjs[i]' * O * pjs[i]

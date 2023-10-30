@@ -66,3 +66,14 @@ end
     @test (n * a_dagger - a_dagger * n) ≈ a_dagger
     @test (n * a - a * n) ≈ -a
 end
+
+# ——————————————————————————————————— Spin Operators ——————————————————————————————————— #
+@testset "Spin" begin
+    for type in [:heisenberg, :fermi]
+        sx, sy, sz = spin_operators(type, 1)
+
+        @test im * sz == commutator(sx, sy)
+        @test im * sx == commutator(sy, sz)
+        @test im * sy == commutator(sz, sx)
+    end
+end

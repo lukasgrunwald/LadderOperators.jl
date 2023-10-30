@@ -96,3 +96,35 @@ function local_fermions_multiorbital(Nb = 2)
 
     return Cdag_band, C_band, Z_band, N
 end
+
+"""
+    local_spin(type::Symbol)
+
+Generate a list of local spin matrices based on the specified type.
+
+# Arguments
+- `type::Symbol = {:heisenberg, :fermi}`: The type of spin representation to generate.
+
+# Returns
+- An array containing three matrices representing the spin operators based on the specified type.
+For `:heisenberg`, it returns the Pauli spin operators [sigma_x, sigma_y, sigma_z].
+For `:fermi`, it returns the spin operators represented in the fermionic basis.
+"""
+function local_spin(type)
+    # Pauli matrices (always the fundamental building block)
+    sigma_x = [0.0+0im 1.;1. 0.]
+    sigma_y = [0.0+0im -1.0im;1.0im 0.]
+    sigma_z = [1. + 0im 0.0; 0.0 -1.]
+    σ⃗ = [sigma_x, sigma_y, sigma_z]
+
+    if type == :heisenberg
+        s⃗ = 1/2 .* σ⃗ # Spin-1/2 representation
+    elseif type == :fermi
+        Cdag, C = local_fermions()
+        s⃗ =  1/2 .* [sum(permutedims(Cdag) * σ⃗[i] * C) for i in 1:3]
+    else
+        error("$type not implemented!")
+    end
+
+    return s⃗
+end

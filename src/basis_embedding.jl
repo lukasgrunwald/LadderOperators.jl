@@ -36,7 +36,7 @@ end
 function embed_fock(N, x::AbstractMatrix{T}, Z = I(size(x, 1)); idx = 1:N) where T<:Number
     N == 1 && return x
 
-    d = 2
+    d = size(x, 1)
     x_fock = Vector{typeof(x)}(undef, N)
 
     for i in idx

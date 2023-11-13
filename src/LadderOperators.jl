@@ -56,6 +56,7 @@ function ladder_operators(type, Nsites, args...)
 
     return Cdag, C
 end
+
 """
     spin_operators(type, Nsites, args...)
 
@@ -63,7 +64,7 @@ Generate multi-site spin operators based on the specified type and system size.
 
 # Arguments
 - `type{:heisenberg, :fermi}`: The type of spin representation to generate.
-- `Nsites::Int`: The number of sites or particles in the system.
+- `Nsites::Int`: The number of sites in the system.
 - `args...`: Additional arguments, if needed.
 
 # Returns

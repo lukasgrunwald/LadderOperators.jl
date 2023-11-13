@@ -1,7 +1,7 @@
 name = "LadderOperators"
 uuid = "d27c24bd-84bf-4c52-914b-d12f8784db43"
 authors = ["Lukas Grunwald <lukas.grunwald@rwth-aachen.de>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"

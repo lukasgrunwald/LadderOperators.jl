@@ -21,3 +21,13 @@ jobs:
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
+  register:
+    needs: test # Only run this once test is completed
+    name: Register Package
+    runs-on: ubuntu-latest
+    steps:
+    - uses: lukasgrunwald/julia-register-local@master
+      with:
+        localregistry: git@github.com:lukasgrunwald/CondMatRegistry.git
+        ssh_keys: |
+           ${{ secrets.REGISTRY_DEPLOY }}
